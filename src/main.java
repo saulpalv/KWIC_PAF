@@ -15,34 +15,7 @@ public class main {
 
         File file = new File("./src/input.txt");
 
-        Thread t4 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                File filename = new File("./src/output.txt");
-                try {
-                    // Reiniciar archivo de salida.
-                    BufferedWriter bufferWritter = new BufferedWriter(new FileWriter(filename));
-                    bufferWritter.write("");
-                    bufferWritter.close();
-
-                    int i;
-
-                    FileWriter fileWritter = new FileWriter(filename,true);
-                    bufferWritter = new BufferedWriter(fileWritter);
-
-                    while ((i = pr3.read()) != -1) {
-                        bufferWritter.append((char)i);
-                    }
-                    bufferWritter.close();
-                    fileWritter.close();
-                    pr3.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-
-        Thread t1 = new Thread(() -> {
+        Thread readerPipe = new Thread(() -> {
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 String strLine;
@@ -50,12 +23,12 @@ public class main {
                     pw1.write(strLine + '\n');
                 }
                 pw1.close();
-            } catch (IOException e) {
-
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         });
 
-        Thread t2 = new Thread(new Runnable() {
+        Thread shifterPipe = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -79,7 +52,7 @@ public class main {
 
             private void writeShifts(String strLine) throws IOException {
                 List<String> shift = new ArrayList(Arrays.asList(strLine.split(" ")));
-                for (int i = 0; i < shift.size(); i++){
+                for (int i = 0; i < shift.size(); i++) {
                     //Concat elements of list in a single line
                     StringBuilder strBldr = new StringBuilder();
                     shift.forEach(word -> strBldr.append(word + " "));
@@ -95,8 +68,9 @@ public class main {
             }
         });
 
-        Thread t3 = new Thread(new Runnable() {
+        Thread orderingPipe = new Thread(new Runnable() {
             List<String> shifts = new ArrayList<>();
+
             @Override
             public void run() {
                 try {
@@ -113,28 +87,51 @@ public class main {
                     }
                     pr2.close();
                     Collections.sort(shifts);
-                    shifts.forEach(s-> {
-                        try{
-                            pw3.write(s+ '\n');
-                        }catch(Exception e){
+                    shifts.forEach(s -> {
+                        try {
+                            pw3.write(s + '\n');
+                        } catch (Exception e) {
                         }
                     });
                     pw3.close();
-                    t4.start();
+
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
             }
 
-            private void saveShift(String line){
+            private void saveShift(String line) {
                 shifts.add(line);
             }
         });
 
+        Thread writerPipe = new Thread(() -> {
+            File filename = new File("./src/output.txt");
+            try {
+                // Reiniciar archivo de salida.
+                BufferedWriter bufferWritter = new BufferedWriter(new FileWriter(filename));
+                bufferWritter.write("");
+                bufferWritter.close();
 
+                int i;
 
-        t1.start();
-        t2.start();
-        t3.start();
+                FileWriter fileWritter = new FileWriter(filename, true);
+                bufferWritter = new BufferedWriter(fileWritter);
+
+                while ((i = pr3.read()) != -1) {
+                    bufferWritter.append((char) i);
+                }
+                bufferWritter.close();
+                fileWritter.close();
+                pr3.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        readerPipe.start();
+        shifterPipe.start();
+        orderingPipe.start();
+        writerPipe.start();
     }
 }
