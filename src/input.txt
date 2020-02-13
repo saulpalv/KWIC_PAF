@@ -1,5 +1,0 @@
-Interfaz que provee
-Iterface que requiere
-Relaciones entre componentes
-Componentes modelo de capas
-Filtros y mangueras

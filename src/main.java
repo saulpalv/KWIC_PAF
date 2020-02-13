@@ -13,7 +13,7 @@ public class main {
         PipedWriter pw3 = new PipedWriter();
         PipedReader pr3 = new PipedReader(pw3);
 
-        File file = new File("./src/input.txt");
+        File file = new File("./src/input_iMDB.txt");
 
         Thread readerPipe = new Thread(() -> {
             try {
