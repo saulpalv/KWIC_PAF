@@ -1,8 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -13,7 +10,16 @@ public class main {
         PipedWriter pw3 = new PipedWriter();
         PipedReader pr3 = new PipedReader(pw3);
 
-        File file = new File("./src/input_iMDB.txt");
+        String input;
+        String output;
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ingrese nombre de archivo de entrada: ");
+        input = scanner.nextLine();
+        System.out.println("Ingrese nombre de archivo de entrada: ");
+        output = scanner.nextLine();
+
+        File file = new File("./src/" + input);
 
         Thread readerPipe = new Thread(() -> {
             try {
@@ -69,7 +75,7 @@ public class main {
         });
 
         Thread orderingPipe = new Thread(new Runnable() {
-            List<String> shifts = new ArrayList<>();
+            TreeSet<String> shifts = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 
             @Override
             public void run() {
@@ -86,7 +92,8 @@ public class main {
                         }
                     }
                     pr2.close();
-                    Collections.sort(shifts);
+                    //Collections.sort(shifts);
+                    //shifts.forEach(System.out::println);
                     shifts.forEach(s -> {
                         try {
                             pw3.write(s + '\n');
@@ -106,7 +113,7 @@ public class main {
         });
 
         Thread writerPipe = new Thread(() -> {
-            File filename = new File("./src/output.txt");
+            File filename = new File("./src/" + output);
             try {
                 // Reiniciar archivo de salida.
                 BufferedWriter bufferWritter = new BufferedWriter(new FileWriter(filename));
