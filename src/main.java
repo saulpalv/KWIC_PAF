@@ -15,6 +15,33 @@ public class main {
 
         File file = new File("./src/input.txt");
 
+        Thread t4 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                File filename = new File("./src/output.txt");
+                try {
+                    // Reiniciar archivo de salida.
+                    BufferedWriter bufferWritter = new BufferedWriter(new FileWriter(filename));
+                    bufferWritter.write("");
+                    bufferWritter.close();
+
+                    int i;
+
+                    FileWriter fileWritter = new FileWriter(filename,true);
+                    bufferWritter = new BufferedWriter(fileWritter);
+
+                    while ((i = pr3.read()) != -1) {
+                        bufferWritter.append((char)i);
+                    }
+                    bufferWritter.close();
+                    fileWritter.close();
+                    pr3.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
         Thread t1 = new Thread(() -> {
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));
@@ -86,7 +113,14 @@ public class main {
                     }
                     pr2.close();
                     Collections.sort(shifts);
-                    shifts.forEach(System.out::println);
+                    shifts.forEach(s-> {
+                        try{
+                            pw3.write(s+ '\n');
+                        }catch(Exception e){
+                        }
+                    });
+                    pw3.close();
+                    t4.start();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -96,6 +130,8 @@ public class main {
                 shifts.add(line);
             }
         });
+
+
 
         t1.start();
         t2.start();
