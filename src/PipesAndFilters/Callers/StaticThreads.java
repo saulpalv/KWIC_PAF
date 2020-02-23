@@ -1,8 +1,10 @@
+package PipesAndFilters.Callers;
+
 import java.io.*;
 import java.util.*;
 
-public class main {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+public class StaticThreads {
+    public static void run() throws IOException {
         PipedWriter pw1 = new PipedWriter();
         PipedReader pr1 = new PipedReader(pw1);
         PipedWriter pw2 = new PipedWriter();
@@ -85,15 +87,13 @@ public class main {
                     while ((i = pr2.read()) != -1) {
                         char character = (char) i;
                         if (character == '\n') {
-                            saveShift(strBldr.toString());
+                            shifts.add(strBldr.toString());
                             strBldr = new StringBuilder();
                         } else {
                             strBldr.append((char) i);
                         }
                     }
                     pr2.close();
-                    //Collections.sort(shifts);
-                    //shifts.forEach(System.out::println);
                     shifts.forEach(s -> {
                         try {
                             pw3.write(s + '\n');
@@ -101,14 +101,9 @@ public class main {
                         }
                     });
                     pw3.close();
-
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-            }
-
-            private void saveShift(String line) {
-                shifts.add(line);
             }
         });
 
