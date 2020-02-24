@@ -1,6 +1,6 @@
-package PipesAndFilters.Base;
+package PipesAndFilters.Piped.Foundation;
 
-public abstract class FilterBehaviour implements IFilterBehaviour {
+public abstract class FilterBehaviourReaderWriter implements IFilterBehaviourReaderWriter {
     public java.io.Writer Writer;
     public java.io.Reader Reader;
 

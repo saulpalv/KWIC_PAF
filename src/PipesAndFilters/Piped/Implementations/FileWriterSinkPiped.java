@@ -1,16 +1,16 @@
-package PipesAndFilters.Implementations;
+package PipesAndFilters.Piped.Implementations;
 
-import PipesAndFilters.Base.FilterBehaviour;
+import PipesAndFilters.Piped.Foundation.FilterBehaviourReaderWriter;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PipedReader;
 
-public class FileWriterSink extends FilterBehaviour {
+public class FileWriterSinkPiped extends FilterBehaviourReaderWriter {
     String filePath;
 
-    public FileWriterSink(String fileName){
+    public FileWriterSinkPiped(String fileName){
         this.filePath = "./src/" + fileName;
         Reader = new PipedReader();
         try {

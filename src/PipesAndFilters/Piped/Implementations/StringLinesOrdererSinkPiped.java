@@ -1,17 +1,17 @@
-package PipesAndFilters.Implementations;
+package PipesAndFilters.Piped.Implementations;
 
-import PipesAndFilters.Base.FilterBehaviour;
+import PipesAndFilters.Piped.Foundation.FilterBehaviourReaderWriter;
 
 import java.io.IOException;
 import java.io.PipedReader;
 import java.io.PipedWriter;
 import java.util.TreeSet;
 
-public class StringLinesOrdererSink extends FilterBehaviour {
+public class StringLinesOrdererSinkPiped extends FilterBehaviourReaderWriter {
 
     TreeSet<String> shifts = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 
-    public StringLinesOrdererSink() {
+    public StringLinesOrdererSinkPiped() {
         Reader = new PipedReader();
         Writer = new PipedWriter();
     }

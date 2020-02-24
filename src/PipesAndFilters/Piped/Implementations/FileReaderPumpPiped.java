@@ -1,13 +1,13 @@
-package PipesAndFilters.Implementations;
+package PipesAndFilters.Piped.Implementations;
 
-import PipesAndFilters.Base.FilterBehaviour;
+import PipesAndFilters.Piped.Foundation.FilterBehaviourReaderWriter;
 
 import java.io.*;
 
-public class FileReaderPump extends FilterBehaviour {
+public class FileReaderPumpPiped extends FilterBehaviourReaderWriter {
     String filePath;
 
-    public FileReaderPump(String fileName) {
+    public FileReaderPumpPiped(String fileName) {
         this.filePath = "./src/" + fileName;
         try {
             Reader = new BufferedReader(new FileReader(filePath));

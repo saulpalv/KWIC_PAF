@@ -1,15 +1,15 @@
-package PipesAndFilters.Implementations;
+package PipesAndFilters.Piped.Implementations;
 
-import PipesAndFilters.Base.FilterBehaviour;
+import PipesAndFilters.Piped.Foundation.FilterBehaviourReaderWriter;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class StringLineCircularShifterSink extends FilterBehaviour {
+public class StringLineCircularShifterSinkPiped extends FilterBehaviourReaderWriter {
 
-    public StringLineCircularShifterSink() {
+    public StringLineCircularShifterSinkPiped() {
         Reader = new PipedReader();
         Writer = new PipedWriter();
     }
