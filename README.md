@@ -1,4 +1,4 @@
-#Pipes and Filters Architecture Implementation Of KWIC (keyword in context)
+# Pipes and Filters Architecture Implementation Of KWIC (keyword in context)
 
 Professor : Dra. María Lucía Barrón Estrada
 
