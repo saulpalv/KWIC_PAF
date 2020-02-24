@@ -36,11 +36,6 @@ public class ThreadFilter<R, W> extends Thread {
         wType = bbClass.getActualTypeArguments()[1]; //or better : wType = behaviour.Writer.getClass();
         wClass = (Class<W>) wType;
         rClass = (Class<R>) rType;
-            /*Field field = bbClass.getDeclaredField("Reader");
-            var type = (Class<R>)field.getType();
-            rClass = (Class<R>) rType;
-            Class<R> rClass = (Class<R>)field.getType(); // Class object for java.lang.String
-            */
     }
 
     public ThreadFilter(FilterBehaviour<R, W> behaviour, ThreadFilter previous) {
@@ -105,9 +100,6 @@ public class ThreadFilter<R, W> extends Thread {
     }
 
     public static void starFilters() {
- /*       for(ThreadFilter tf : Filters){
-            tf.start();
-        }*/
         Filters.forEach(ThreadFilter::start);
     }
 }
