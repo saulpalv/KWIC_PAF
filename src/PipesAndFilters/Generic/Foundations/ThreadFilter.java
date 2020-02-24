@@ -47,13 +47,13 @@ public class ThreadFilter<R, W> extends Thread {
     public String toString() {
         String behaviourTypeName = Behaviour.getClass().getSimpleName();
         String readerTypeName = rClass.getSimpleName();
-        String writerTypeNmae = wClass.getSimpleName();
+        String writerTypeName = wClass.getSimpleName();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Filter with " + behaviourTypeName + " behaviour :");
         stringBuilder.append("\n");
         stringBuilder.append("Reader : " + readerTypeName);
         stringBuilder.append("\n");
-        stringBuilder.append("Writter : " + writerTypeNmae);
+        stringBuilder.append("Writter : " + writerTypeName);
         return stringBuilder.toString();
     }
 
